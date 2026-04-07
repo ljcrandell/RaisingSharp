@@ -240,10 +240,10 @@
       <div class="home-sub-title">Stay sharp. Stay informed.</div>
       <p class="home-sub-body">New research, analysis, and practical insight on raising cognitively capable kids — delivered twice a month. No noise.</p>
       <div class="home-sub-form">
-        <input class="home-sub-input" type="email" placeholder="your@email.com">
-        <button class="home-sub-btn">Subscribe</button>
+        <input class="home-sub-input" type="email" placeholder="your@email.com" id="home-email">
+        <button class="home-sub-btn" onclick="subscribe('home-email','home-msg')">Subscribe</button>
       </div>
-      <div class="home-sub-note">Free. No spam. Unsubscribe any time.</div>
+      <div class="home-sub-note" id="home-msg">Free. No spam. Unsubscribe any time.</div>
     </div>
 
     <div class="home-grid">
@@ -345,10 +345,10 @@
       <div class="inline-sub-title">This is what we write about.</div>
       <p class="inline-sub-body">New analysis on cognitive development, attention, and education — twice a month. Free.</p>
       <div class="inline-sub-form">
-        <input class="inline-sub-input" type="email" placeholder="your@email.com">
-        <button class="inline-sub-btn">Subscribe</button>
+        <input class="inline-sub-input" type="email" placeholder="your@email.com" id="inline-email">
+        <button class="inline-sub-btn" onclick="subscribe('inline-email','inline-msg')">Subscribe</button>
       </div>
-      <div class="inline-sub-note">No spam. Unsubscribe any time.</div>
+      <div class="inline-sub-note" id="inline-msg">No spam. Unsubscribe any time.</div>
     </div>
 
     <h2>What is driving the reversal</h2>
@@ -396,6 +396,38 @@ function showTab(name){
     }
   });
   window.scrollTo(0,0);
+}
+
+function subscribe(inputId, msgId) {
+  var email = document.getElementById(inputId).value.trim();
+  var msg = document.getElementById(msgId);
+  if (!email || !email.includes('@')) {
+    msg.textContent = 'Please enter a valid email address.';
+    msg.style.color = '#c0392b';
+    return;
+  }
+  msg.textContent = 'Subscribing...';
+  msg.style.color = '';
+  fetch('https://api.beehiiv.com/v2/publications/a6c195fa-9262-4e2c-b541-32bd3808eb24/subscriptions', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer pub_a6c195fa-9262-4e2c-b541-32bd3808eb24' },
+    body: JSON.stringify({ email: email, reactivate_existing: false, send_welcome_email: true })
+  })
+  .then(function(r){ return r.json(); })
+  .then(function(data){
+    if (data.data && data.data.id) {
+      msg.textContent = "You're subscribed. Welcome.";
+      msg.style.color = '#1a3a5c';
+      document.getElementById(inputId).value = '';
+    } else {
+      msg.textContent = 'Something went wrong. Please try again.';
+      msg.style.color = '#c0392b';
+    }
+  })
+  .catch(function(){
+    msg.textContent = 'Something went wrong. Please try again.';
+    msg.style.color = '#c0392b';
+  });
 }
 </script>
 </body>
