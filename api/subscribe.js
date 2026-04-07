@@ -17,7 +17,7 @@ export default async function handler(req, res) {
 
     if (first_name) {
       payload.custom_fields = [
-        { id: 'af476d2d-ad62-4ab9-8190-e8824f81580a', value: first_name }
+        { name: 'First Name', value: first_name }
       ];
     }
 
