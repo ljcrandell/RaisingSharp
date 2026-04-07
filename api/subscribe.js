@@ -3,12 +3,19 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
-  const { email } = req.body;
+  const { email, first_name } = req.body;
   if (!email || !email.includes('@')) {
     return res.status(400).json({ error: 'Invalid email' });
   }
 
   try {
+    const payload = {
+      email,
+      reactivate_existing: false,
+      send_welcome_email: true,
+    };
+    if (first_name) payload.first_name = first_name;
+
     const response = await fetch(
       'https://api.beehiiv.com/v2/publications/pub_a6c195fa-9262-4e2c-b541-32bd3808eb24/subscriptions',
       {
@@ -17,11 +24,7 @@ export default async function handler(req, res) {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${process.env.BEEHIIV_API_KEY}`,
         },
-        body: JSON.stringify({
-          email,
-          reactivate_existing: false,
-          send_welcome_email: true,
-        }),
+        body: JSON.stringify(payload),
       }
     );
 
