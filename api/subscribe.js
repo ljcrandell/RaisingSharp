@@ -15,7 +15,7 @@ export default async function handler(req, res) {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': 'Bearer EeLwxXtVoPsGt45QB81nMC8rQd0rCZygW7Gkv1UGH1jijEbuQGk10UkxckUc4V3D',
+          'Authorization': `Bearer ${process.env.BEEHIIV_API_KEY}`,
         },
         body: JSON.stringify({
           email,
@@ -26,15 +26,13 @@ export default async function handler(req, res) {
     );
 
     const data = await response.json();
-    console.log('Beehiiv response:', JSON.stringify(data));
 
     if (data.data && data.data.id) {
       return res.status(200).json({ success: true });
     } else {
-      return res.status(400).json({ error: 'Subscription failed', detail: data });
+      return res.status(400).json({ error: 'Subscription failed' });
     }
   } catch (err) {
-    console.error('Subscribe error:', err);
     return res.status(500).json({ error: 'Server error' });
   }
 }
