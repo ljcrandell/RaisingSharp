@@ -415,7 +415,7 @@ function subscribe(inputId, msgId) {
   })
   .then(function(r){ return r.json(); })
   .then(function(data){
-    if (data.data && data.data.id) {
+    if (data.success) {
       msg.textContent = "You're subscribed. Welcome.";
       msg.style.color = '#1a3a5c';
       document.getElementById(inputId).value = '';

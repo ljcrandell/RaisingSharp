@@ -10,12 +10,12 @@ export default async function handler(req, res) {
 
   try {
     const response = await fetch(
-      'https://api.beehiiv.com/v2/publications/a6c195fa-9262-4e2c-b541-32bd3808eb24/subscriptions',
+      'https://api.beehiiv.com/v2/publications/pub_a6c195fa-9262-4e2c-b541-32bd3808eb24/subscriptions',
       {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': 'Bearer pub_a6c195fa-9262-4e2c-b541-32bd3808eb24',
+          'Authorization': 'Bearer a6c195fa-9262-4e2c-b541-32bd3808eb24',
         },
         body: JSON.stringify({
           email,
@@ -26,6 +26,7 @@ export default async function handler(req, res) {
     );
 
     const data = await response.json();
+    console.log('Beehiiv response:', JSON.stringify(data));
 
     if (data.data && data.data.id) {
       return res.status(200).json({ success: true });
@@ -33,6 +34,7 @@ export default async function handler(req, res) {
       return res.status(400).json({ error: 'Subscription failed', detail: data });
     }
   } catch (err) {
+    console.error('Subscribe error:', err);
     return res.status(500).json({ error: 'Server error' });
   }
 }
