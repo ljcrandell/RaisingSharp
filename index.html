@@ -408,10 +408,10 @@ function subscribe(inputId, msgId) {
   }
   msg.textContent = 'Subscribing...';
   msg.style.color = '';
-  fetch('https://api.beehiiv.com/v2/publications/a6c195fa-9262-4e2c-b541-32bd3808eb24/subscriptions', {
+  fetch('/api/subscribe', {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer pub_a6c195fa-9262-4e2c-b541-32bd3808eb24' },
-    body: JSON.stringify({ email: email, reactivate_existing: false, send_welcome_email: true })
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ email: email })
   })
   .then(function(r){ return r.json(); })
   .then(function(data){
