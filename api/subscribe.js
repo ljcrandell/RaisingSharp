@@ -14,7 +14,12 @@ export default async function handler(req, res) {
       reactivate_existing: false,
       send_welcome_email: true,
     };
-    if (first_name) payload.first_name = first_name;
+
+    if (first_name) {
+      payload.custom_fields = [
+        { id: 'af476d2d-ad62-4ab9-8190-e8824f81580a', value: first_name }
+      ];
+    }
 
     const response = await fetch(
       'https://api.beehiiv.com/v2/publications/pub_a6c195fa-9262-4e2c-b541-32bd3808eb24/subscriptions',
