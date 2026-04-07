@@ -294,10 +294,10 @@
       <div class="footer-top">
         <div class="footer-title">Raising <span>Sharp</span></div>
         <div class="footer-nav">
-          <span class="footer-nav-item">About</span>
-          <span class="footer-nav-item">Archive</span>
-          <span class="footer-nav-item">Subscribe</span>
-          <span class="footer-nav-item">Contact</span>
+          <span class="footer-nav-item" onclick="showTab('about')">About</span>
+          <span class="footer-nav-item" onclick="showTab('home')">Archive</span>
+          <span class="footer-nav-item" onclick="document.getElementById('home-email').scrollIntoView({behavior:'smooth'})">Subscribe</span>
+          <span class="footer-nav-item" onclick="showTab('about')">Contact</span>
         </div>
       </div>
       <div class="footer-bottom">
@@ -397,8 +397,8 @@
         <div class="footer-title">Raising <span>Sharp</span></div>
         <div class="footer-nav">
           <span class="footer-nav-item" onclick="showTab('home')">Home</span>
-          <span class="footer-nav-item">Archive</span>
-          <span class="footer-nav-item">Subscribe</span>
+          <span class="footer-nav-item" onclick="showTab('home')">Archive</span>
+          <span class="footer-nav-item" onclick="document.getElementById('inline-email').scrollIntoView({behavior:'smooth'})">Subscribe</span>
         </div>
       </div>
       <div class="footer-bottom">&copy; 2026 Raising Sharp &middot; Independent research and analysis on cognitive development and education.</div>
